@@ -46,6 +46,7 @@ const deleteTask = (index) => {
   state.tasks.splice(index, 1)
 }
 
+
 const toggleTask = (index) => {
   state.tasks[index].completed = !state.tasks[index].completed
 }
