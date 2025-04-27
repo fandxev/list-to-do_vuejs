@@ -9,15 +9,20 @@
       </div>
 
       <ul>
-        <li v-for="(task, index) in state.tasks" :key="index"
-          class="flex items-center justify-between bg-gray-100 p-2 mb-2 rounded">
-          <div @click="toggleTask(index)" :class="{ 'line-through text-gray-500': task.completed }"
+
+        <!-- start draggable -->
+        <draggable class="dragArea list-group w-full" :list="state.tasks">
+          <div  class="flex items-center justify-between bg-gray-100 p-2 mb-2 rounded" v-for="(task, index) in state.tasks" :key="task.text">
+          <div  @click="toggleTask(index)" :class="{ 'line-through text-gray-500': task.completed }"
             class="cursor-pointer flex-grow">
             {{ task.text }}
           </div>
-          <button @click="deleteTask(index)"
+                    <button @click="deleteTask(index)"
             class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">Hapus</button>
-        </li>
+          </div>
+        </draggable>
+        <!-- end draggable -->
+
       </ul>
 
       <p v-if="state.tasks.length === 0" class="text-center text-gray-500 mt-4">
@@ -29,10 +34,12 @@
 
 <script setup>
 import { reactive } from 'vue'
+import { VueDraggableNext as draggable } from 'vue-draggable-next'
 
 const state = reactive({
   newTask: "",
-  tasks: []
+  tasks: [],
+  dragging: true
 })
 
 const addTask = () => {
