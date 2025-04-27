@@ -2,9 +2,8 @@
   <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
       <h1 class="text-2xl font-bold mb-4 text-center">To-Do List</h1>
-
       <div class="flex mb-4">
-        <input v-model="newTask" @keyup.enter="addTask" type="text" placeholder="Tambah tugas baru..."
+        <input v-model="state.newTask" @keyup.enter="addTask" type="text" placeholder="Tambah tugas baru..."
           class="flex-grow p-2 border rounded-l-lg focus:outline-none" />
         <button @click="addTask" class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-lg">
           Tambah
@@ -12,7 +11,7 @@
       </div>
 
       <ul>
-        <li v-for="(task, index) in tasks" :key="index"
+        <li v-for="(task, index) in state.tasks" :key="index"
           class="flex items-center justify-between bg-gray-100 p-2 mb-2 rounded">
           <div @click="toggleTask(index)" :class="{ 'line-through text-gray-500': task.completed }"
             class="cursor-pointer flex-grow">
@@ -24,13 +23,12 @@
         </li>
       </ul>
 
-      <p v-if="tasks.length === 0" class="text-center text-gray-500 mt-4">
+      <p v-if="state.tasks.length === 0" class="text-center text-gray-500 mt-4">
         Tidak ada tugas. Tambahkan tugas baru!
       </p>
     </div>
   </div>
 </template>
-
 <script setup>
 import { reactive } from 'vue'
 
@@ -40,11 +38,16 @@ const state = reactive({
 })
 
 const addTask = () => {
+  console.log("addTask called!! " + state.newTask + " end");
   if (state.newTask.trim() !== '') {
     state.tasks.push({ text: state.newTask, completed: false })
     state.newTask = ''
   }
+  else {
+    console.log("else called");
+  }
 }
+
 
 const deleteTask = (index) => {
   state.tasks.splice(index, 1)
