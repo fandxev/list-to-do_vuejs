@@ -1,13 +1,11 @@
 <template>
   <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
     <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-      <h1 class="text-2xl font-bold mb-4 text-center">To-Do List</h1>
+      <h1 class="text-2xl font-bold mb-4 text-center">Fandy To Do List</h1>
       <div class="flex mb-4">
-        <input v-model="state.newTask" @keyup.enter="addTask" type="text" placeholder="Tambah tugas baru..."
+        <input type="text" v-model="state.newTask" @keyup.enter="addTask" placeholder="Tambah tugas baru..."
           class="flex-grow p-2 border rounded-l-lg focus:outline-none" />
-        <button @click="addTask" class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-lg">
-          Tambah
-        </button>
+        <button @click="addTask" class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-lg">Tambah</button>
       </div>
 
       <ul>
@@ -17,37 +15,32 @@
             class="cursor-pointer flex-grow">
             {{ task.text }}
           </div>
-          <button @click="deleteTask(index)" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
-            Hapus
-          </button>
+          <button @click="deleteTask(index)"
+            class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">Hapus</button>
         </li>
       </ul>
 
       <p v-if="state.tasks.length === 0" class="text-center text-gray-500 mt-4">
-        Tidak ada tugas. Tambahkan tugas baru!
+        Belum ada aktivitas. Tambahkan aktivitas baru!
       </p>
     </div>
   </div>
 </template>
+
 <script setup>
 import { reactive } from 'vue'
 
 const state = reactive({
-  newTask: '',
+  newTask: "",
   tasks: []
 })
 
 const addTask = () => {
-  console.log("addTask called!! " + state.newTask + " end");
-  if (state.newTask.trim() !== '') {
+  if (state.newTask.trim() !== "") {
     state.tasks.push({ text: state.newTask, completed: false })
-    state.newTask = ''
-  }
-  else {
-    console.log("else called");
+    state.newTask = ""
   }
 }
-
 
 const deleteTask = (index) => {
   state.tasks.splice(index, 1)
