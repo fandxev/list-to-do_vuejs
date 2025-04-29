@@ -42,20 +42,34 @@ const state = reactive({
   dragging: true
 })
 
+//jalankan di awal
+if(localStorage.getItem('tasks')){
+  state.tasks = JSON.parse(localStorage.getItem('tasks'))
+}
+
+
 const addTask = () => {
   if (state.newTask.trim() !== "") {
     state.tasks.push({ text: state.newTask, completed: false })
     state.newTask = ""
+    saveTask()
   }
 }
 
 const deleteTask = (index) => {
   state.tasks.splice(index, 1)
+  saveTask()
 }
 
 
 const toggleTask = (index) => {
   state.tasks[index].completed = !state.tasks[index].completed
+  saveTask()
+}
+
+
+const saveTask = () => {
+  localStorage.setItem('tasks', JSON.stringify(state.tasks))
 }
 </script>
 
